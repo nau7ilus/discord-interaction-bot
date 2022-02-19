@@ -1,0 +1,28 @@
+{
+  "name": "discord-interaction-bot",
+  "version": "1.0.0",
+  "description": "Discord bot made with webhooks using Metarhia",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:impress": "node impress.js",
+    "start:interaction": "node interactionServer.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nieopierzony/discord-interaction-bot.git"
+  },
+  "keywords": [],
+  "author": "Philip Zelinski <filipbon7@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nieopierzony/discord-interaction-bot/issues"
+  },
+  "homepage": "https://github.com/nieopierzony/discord-interaction-bot#readme",
+  "dependencies": {
+    "@nieopierzony/tweetnacl": "^1.0.4",
+    "dotenv": "^16.0.0",
+    "impress": "^2.6.6",
+    "metacom": "^2.0.4"
+  }
+}
