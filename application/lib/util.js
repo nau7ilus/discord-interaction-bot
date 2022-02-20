@@ -7,7 +7,6 @@
   objectToCamel(object) {
     const entries = Object.entries(object);
     const camelEntries = entries.map(([key, value]) => {
-      console.log(value, lib.util.isObject(value));
       const val = lib.util.isObject(value) ? lib.util.objectToCamel(value) : value;
       return [lib.util.snakeToCamel(key), val];
     });
