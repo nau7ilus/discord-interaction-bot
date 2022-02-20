@@ -6,6 +6,6 @@
     const commands = api.commands.get();
     const command = commands.find(({ name }) => name === interaction.data.name);
     if (!command) return { type: lib.interactions.CallbackTypes.ChannelMessageWithSource, data: { content: 'Error ' } };
-    return lib.commands[command.fileName].method(interaction);
+    return domain.commands[command.fileName].method(interaction);
   },
 });
