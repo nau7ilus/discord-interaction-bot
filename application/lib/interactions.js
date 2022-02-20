@@ -13,4 +13,9 @@
     User: 2,
     Message: 3,
   },
+  replyWithMessage: async (content, options = {}) => {
+    // TODO: Add support of embeds
+    const { CallbackTypes } = lib.interactions;
+    return { type: CallbackTypes.ChannelMessageWithSource, data: { content, ...options } };
+  },
 });

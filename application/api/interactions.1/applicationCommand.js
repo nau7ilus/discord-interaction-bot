@@ -5,7 +5,7 @@
     const interaction = lib.util.objectToCamel(rawInteraction);
     const commands = api.commands.get();
     const command = commands.find(({ name }) => name === interaction.data.name);
-    if (!command) return { type: lib.interactions.CallbackTypes.ChannelMessageWithSource, data: { content: 'Error ' } };
+    if (!command) return lib.interactions.replyWithMessage('Command not found');
     return domain.commands[command.fileName].method(interaction);
   },
 });
