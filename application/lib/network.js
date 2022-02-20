@@ -1,13 +1,15 @@
 ({
   makeRequestOptions: (url, options = {}) => {
-    const { hostname, port, pathname: path } = new URL(url);
-    const result = { hostname, port, path, method: options.method ?? 'GET', headers: options.headers ?? {} };
+    const { hostname, port, pathname, search } = new URL(url);
+    const path = `${pathname}${search}`;
+    const { method = 'GET', headers = {} } = options;
+    const result = { hostname, port, path, method, headers };
     if (options.body) {
       result.body = JSON.stringify(options.body);
       result.headers = {
         'Content-Type': 'application/json',
         'Content-Length': Buffer.byteLength(result.body),
-        ...result.headers,
+        ...headers,
       };
     }
     return result;
@@ -32,7 +34,7 @@
           return reject(error);
         }
       });
-      req.write(requestOptions.body);
+      if (requestOptions.body) req.write(requestOptions.body);
       req.end();
     });
   },
