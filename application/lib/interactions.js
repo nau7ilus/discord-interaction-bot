@@ -13,10 +13,4 @@
     User: 2,
     Message: 3,
   },
-
-  parse(rawInteraction) {
-    const entries = Object.entries(rawInteraction);
-    const camelEntries = entries.map(([key, value]) => [lib.util.snakeToCamel(key), value]);
-    return Object.fromEntries(camelEntries);
-  },
 });
