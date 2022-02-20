@@ -38,4 +38,9 @@
       req.end();
     });
   },
+
+  discordFetch: (url, body, method = 'GET') => {
+    const headers = { Authorization: `Bot ${process.env.BOT_TOKEN}`, ...options.headers };
+    return lib.network.fetch(url, { body, method, headers });
+  },
 });

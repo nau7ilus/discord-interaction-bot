@@ -7,9 +7,7 @@
     for await (const command of commands) {
       const { guildCommandURL, globalCommandURL } = lib.constants;
       const url = command.guildID ? guildCommandURL(command.guildID) : globalCommandURL();
-      const headers = { Authorization: `Bot ${process.env.BOT_TOKEN}` };
-      const options = { method: 'POST', body: command, headers };
-      const discordResponse = await lib.network.fetch(url, options);
+      const discordResponse = await lib.network.discordFetch(url, body, 'POST');
       if (discordResponse.id) console.info(`Registered command: ${command.name}`);
       else errored.push(command);
     }
