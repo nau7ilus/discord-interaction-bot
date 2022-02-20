@@ -56,7 +56,8 @@ const handleInteraction = async (req, res) => {
   const isVerified = verifyRequest(req, rawBody);
   if (!isVerified) return send(res, 401, 'Unauthorized');
   const body = JSON.parse(rawBody);
-  const result = await api.interactions[InteractionTypes[body.type]]({ rawInteraction: body });
+  const reportInteraction = api.interactions[InteractionTypes[body.type]];
+  const result = await reportInteraction({ rawInteraction: body, authToken: LOGIN_TOKEN });
   send(res, 200, JSON.stringify(result), true);
 };
 
