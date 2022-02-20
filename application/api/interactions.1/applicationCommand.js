@@ -1,8 +1,8 @@
 ({
   access: 'public',
-  method: async ({ authToken, rawInteraction }) => {
-    await lib.auth.checkToken(authToken);
-    const interaction = await lib.interactions.parse(rawInteraction);
+  method: ({ authToken, rawInteraction }) => {
+    if (!lib.auth.checkToken(authToken)) return new Error('Invalid auth token', 401);
+    const interaction = lib.interactions.parse(rawInteraction);
     const commands = api.commands.get();
     const command = commands.find(({ name }) => name === interaction.data.name);
     if (!command) return { type: lib.interactions.CallbackTypes.ChannelMessageWithSource, data: { content: 'Error ' } };
