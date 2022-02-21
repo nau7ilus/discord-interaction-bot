@@ -10,7 +10,7 @@ const nacl = require('@nieopierzony/tweetnacl');
 let metacom = null;
 let api = null;
 
-const { INTERACTION_ENDPOINT, INTERACTION_SERVER_PORT, PUBLIC_KEY, MAIN_SERVER_URL, LOGIN_TOKEN } = process.env;
+const { INTERACTION_ENDPOINT, INTERACTION_SERVER_PORT, PUBLIC_KEY, MAIN_SERVER_URL } = process.env;
 const InteractionTypes = {
   1: 'ping',
   2: 'applicationCommand',
@@ -38,18 +38,17 @@ const verifyRequest = (req, rawBody) => {
   const isVerified = nacl.verify(
     Buffer.from(timestamp + rawBody),
     Buffer.from(signature, 'hex'),
-    Buffer.from(PUBLIC_KEY, 'hex')
+    Buffer.from(PUBLIC_KEY, 'hex'),
   );
   return isVerified;
 };
 
-const getRequestBody = (req) => {
-  return new Promise((resolve) => {
+const getRequestBody = req =>
+  new Promise(resolve => {
     const data = [];
-    req.on('data', (chunk) => data.push(chunk));
+    req.on('data', chunk => data.push(chunk));
     req.on('end', () => resolve(Buffer.concat(data).toString()));
   });
-};
 
 const handleInteraction = async (req, res) => {
   const rawBody = await getRequestBody(req);
@@ -57,7 +56,7 @@ const handleInteraction = async (req, res) => {
   if (!isVerified) return send(res, 401, 'Unauthorized');
   const body = JSON.parse(rawBody);
   const result = await api.interactions[InteractionTypes[body.type]]({ rawInteraction: body });
-  send(res, 200, JSON.stringify(result), true);
+  return send(res, 200, JSON.stringify(result), true);
 };
 
 const handleRequest = async (req, res) => {
@@ -67,10 +66,10 @@ const handleRequest = async (req, res) => {
       if (!metacom) await connectToMainServer();
       return handleInteraction(req, res);
     }
-    send(res, 404, 'Not found');
+    return send(res, 404, 'Not found');
   } catch (err) {
     console.error(err);
-    send(res, 500, 'Internal server error');
+    return send(res, 500, 'Internal server error');
   }
 };
 

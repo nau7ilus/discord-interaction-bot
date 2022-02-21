@@ -1,3 +1,5 @@
+'use strict';
+
 ({
   // TODO: Add aliases for commands
   data: {
@@ -6,7 +8,7 @@
     guildId: '937062460886769674',
   },
 
-  method: (interaction) => {
+  method: () => {
     const { CallbackTypes } = lib.interactions;
     return { type: CallbackTypes.ChannelMessageWithSource, data: { content: `test` } };
   },

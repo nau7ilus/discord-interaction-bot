@@ -1,3 +1,3 @@
 ({
-  checkToken: (authToken) => process.env.LOGIN_TOKEN === authToken,
+  checkToken: authToken => process.env.LOGIN_TOKEN === authToken,
 });
