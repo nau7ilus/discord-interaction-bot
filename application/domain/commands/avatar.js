@@ -1,5 +1,3 @@
-'use strict';
-
 ({
   // TODO: Add aliases for commands
   data: {
