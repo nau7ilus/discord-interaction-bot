@@ -15,12 +15,12 @@
     return result;
   },
 
-  fetch: async (url, options = {}) => {
+  fetch: (url, options = {}) => {
     const { http, https } = node;
     const transport = url.startsWith('https') ? https : http;
     return new Promise((resolve, reject) => {
       const requestOptions = lib.network.makeRequestOptions(url, options);
-      const req = transport.request(requestOptions, async (res) => {
+      const req = transport.request(requestOptions, async res => {
         const code = res.statusCode;
         if (code >= 400) return reject(new Error(`HTTP status code ${code}`));
         res.on('error', reject);
@@ -29,7 +29,7 @@
           for await (const chunk of res) chunks.push(chunk);
           const json = Buffer.concat(chunks).toString();
           const object = JSON.parse(json);
-          resolve(object);
+          return resolve(object);
         } catch (error) {
           return reject(error);
         }
